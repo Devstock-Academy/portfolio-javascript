@@ -1,11 +1,7 @@
-import { createElement } from "../utils.js";
+import { createElement, validateForm } from "../utils.js";
 import { CONTACT_FORM_DATA, PROFILE_DATA } from "../mocks.js";
-import {
-  clearValidationErrors,
-  validateName,
-  validateEmail,
-  validateMessage,
-} from "../utils.js";
+
+let isFormSubmitted = false;
 
 export const createContactContent = (mainSection) => {
   const h2 = createElement("h2", {
@@ -52,33 +48,18 @@ export const createContactContent = (mainSection) => {
 };
 
 const handleFormSubmit = (e) => {
-  e.preventDefault();
-  clearValidationErrors();
+  const { isValid, fieldNamesWithValues, form } = validateForm(
+    e,
+    isFormSubmitted
+  );
 
-  const form = e.target;
-  const formData = new FormData(form);
-  const fieldNamesWithValues = Array.from(formData.entries());
-  const inputsWrappers = document.querySelectorAll(".input-wrapper");
+  if (isValid) {
+    const messageObject = {};
 
-  let correctFields = 0;
-  const messageObject = {};
+    fieldNamesWithValues.forEach(([name, value]) => {
+      messageObject[name] = value;
+    });
 
-  fieldNamesWithValues.forEach(([name, value]) => {
-    if (name === "name") {
-      const isValid = validateName(value, inputsWrappers[0], messageObject);
-      if (isValid) correctFields++;
-    }
-    if (name === "email") {
-      const isValid = validateEmail(value, inputsWrappers[1], messageObject);
-      if (isValid) correctFields++;
-    }
-    if (name === "message") {
-      const isValid = validateMessage(value, inputsWrappers[2], messageObject);
-      if (isValid) correctFields++;
-    }
-  });
-
-  if (correctFields === fieldNamesWithValues.length) {
     PROFILE_DATA.messages.push(messageObject);
     form.reset();
   }

@@ -10,7 +10,7 @@ export const createAboutContent = (mainSection, updateNavigationState) => {
   });
   const contactMeButton = createButton(
     "img-button",
-    "../images/arrow_left_icon.png",
+    "../images/arrow_right_icon.png",
     "Contact me",
     (e) => updateNavigationState(e, "CONTACT")
   );

@@ -10,6 +10,7 @@ export const createHomeContent = (mainSection) => {
   const homeContentWrapper = createElement("div", {
     id: "home-content-wrapper",
   });
+  const profileImage = createElement("div", { id: "profile-image" });
   const infoWrapper = createElement("div", { className: "info-wrapper" });
 
   HEADERS.home.forEach((header, index) => {
@@ -28,7 +29,7 @@ export const createHomeContent = (mainSection) => {
     }
 
     infoWrapper.append(div);
-    homeContentWrapper.append(infoWrapper);
+    homeContentWrapper.append(profileImage, infoWrapper);
   });
 
   mainSection.append(homeContentWrapper);
@@ -39,12 +40,30 @@ export const createHomeContent = (mainSection) => {
 const createSkillsSection = (targetDiv) => {
   const skillsWrapper = createElement("div", { id: "skills-wrapper" });
 
-  skills.forEach((skill) => {
+  skills.forEach(({ name, experience }) => {
     const skillWrapper = createElement("div", { className: "skill-wrapper" });
-    const img = createElement("img", { src: `../images/${skill}_icon.png` });
-    const span = createElement("span", { innerText: skill.toUpperCase() });
+    const img = createElement("img", { src: `../images/${name}_icon.png` });
+    const descriptionWrapper = createElement("div", {
+      className: "description-wrapper",
+    });
+    const nameSpan = createElement("span", { innerText: name.toUpperCase() });
+    const dotsWrapper = createElement("div", { className: "dots-wrapper" });
+    const experienceSpan = createElement("span", {
+      innerText: `${experience} years`,
+      className: "experience-span",
+    });
 
-    skillWrapper.append(img, span);
+    Array(5)
+      .fill()
+      .forEach((_, index) => {
+        const dot = createElement("div", {
+          className: index < experience ? "filled" : "empty",
+        });
+        dotsWrapper.append(dot);
+      });
+
+    descriptionWrapper.append(nameSpan, dotsWrapper, experienceSpan);
+    skillWrapper.append(img, descriptionWrapper);
     skillsWrapper.append(skillWrapper);
   });
 
@@ -58,10 +77,10 @@ const createProjectsSection = (homeContentWrapper) => {
   const carouselWrapper = createElement("div", {
     className: "carousel-wrapper",
   });
-  const buttonsWrapper = createElement("div");
   const projects = PROFILE_DATA.projects;
 
   if (projects.length > 3) {
+    const buttonsWrapper = createElement("div");
     const prevButton = createCarouselButton(
       "../images/arrow_left_icon.png",
       "prev",
@@ -73,9 +92,11 @@ const createProjectsSection = (homeContentWrapper) => {
       carouselWrapper
     );
     buttonsWrapper.append(prevButton, nextButton);
+    projectsSectionWrapper.append(carouselWrapper, buttonsWrapper);
+  } else {
+    projectsSectionWrapper.append(carouselWrapper);
   }
 
-  projectsSectionWrapper.append(carouselWrapper, buttonsWrapper);
   homeContentWrapper.append(projectsSectionWrapper);
 
   if (projects.length > 0) {

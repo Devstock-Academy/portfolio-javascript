@@ -10,14 +10,14 @@ export const PROFILE_DATA = {
       "In my free time, I enjoy exploring new interests and hobbies. Whether it's engaging in creative projects, staying active in various sports, or continuously learning new things, I find joy in activities that broaden my horizons and enrich my life.",
   },
   skills: [
-    "html",
-    "css",
-    "javascript",
-    "git",
-    "figma",
-    "chrome",
-    "vscode",
-    "github",
+    { name: "html", experience: 5 },
+    { name: "css", experience: 5 },
+    { name: "javascript", experience: 3 },
+    { name: "git", experience: 3 },
+    { name: "figma", experience: 2 },
+    { name: "chrome", experience: 3 },
+    { name: "vscode", experience: 5 },
+    { name: "github", experience: 3 },
   ],
   projects: [
     {
@@ -61,8 +61,8 @@ export const PROFILE_DATA = {
   ],
   sections: {
     home: {
-      title: "Jan Kowalski",
-      subtitle: "Web-Designer",
+      title: "JAN KOWALSKI",
+      subtitle: "WEB-DESIGNER",
     },
     about: {
       title: "MY PROJECTS",

@@ -1,15 +1,11 @@
-import {
-  createElement,
-  createButton,
-  clearValidationErrors,
-  validateProjectTitle,
-  validateTechnologies,
-} from "../utils.js";
+import { createElement, createButton, validateForm } from "../utils.js";
 import { PROFILE_DATA, PROJECT_FORM_DATA } from "../mocks.js";
 
 const body = document.querySelector("body");
 const appWrapper = document.getElementById("app-wrapper");
 const mainSection = document.querySelector("main");
+
+let isFormSubmitted = false;
 
 export const createProjectsContent = () => {
   const buttonWrapper = createElement("div", { className: "button-wrapper" });
@@ -144,41 +140,24 @@ const createAddProjectForm = () => {
 };
 
 const handleFormSubmit = (e) => {
-  e.preventDefault();
-  clearValidationErrors();
+  const { isValid, fieldNamesWithValues } = validateForm(e, isFormSubmitted);
 
-  const form = e.target;
-  const formData = new FormData(form);
-  const fieldNamesWithValues = Array.from(formData.entries());
-  const inputsWrappers = document.querySelectorAll(".input-wrapper");
-  const projectObject = {};
+  if (isValid) {
+    const projectObject = {};
 
-  let correctFields = 0;
+    fieldNamesWithValues.forEach(([name, value]) => {
+      if (name === "technologies")
+        projectObject[name] = value.trim().split(",");
+      else
+        projectObject.title = `${value[0].toUpperCase()}${value
+          .slice(1)
+          .toLowerCase()}`;
+    });
 
-  fieldNamesWithValues.forEach(([name, value]) => {
-    if (name === "project title") {
-      const isValid = validateProjectTitle(
-        value,
-        inputsWrappers[0],
-        projectObject
-      );
-      if (isValid) correctFields++;
-    }
-
-    if (name === "technologies") {
-      const isValid = validateTechnologies(
-        value,
-        inputsWrappers[1],
-        projectObject
-      );
-      if (isValid) correctFields++;
-    }
-  });
-
-  if (correctFields === fieldNamesWithValues.length) {
     PROFILE_DATA.projects.push(projectObject);
-    form.reset();
+
     mainSection.innerHTML = "";
     createProjectsContent();
+    toggleProjectModal();
   }
 };
