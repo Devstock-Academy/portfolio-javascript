@@ -73,7 +73,7 @@ export const validateProjectTitle = (value) => {
   if (value.length < 3) {
     errorMessage = "The title must be at least 3 characters long";
     return errorMessage;
-  } else if (value.length > 20) {
+  } else if (value.length > 30) {
     errorMessage = "The title must not exceed 30 characters.";
     return errorMessage;
   } else return false;

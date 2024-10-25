@@ -92,8 +92,8 @@ footer {
   display: flex;
   max-width: 120rem; /* 1920px */
   width: 100%;
-  justify-content: space-between;
   height: 100%;
+  justify-content: space-between;
 }
 footer ul {
   flex-direction: column;
@@ -191,12 +191,10 @@ p {
   height: 0.75rem;
   border-radius: 100%;
 }
-
 #home-content-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* gap: 4,0625rem; 80px */
 }
 #profile-image {
   background-image: url(/images/profile_image.jpg);
@@ -204,7 +202,7 @@ p {
   height: 19.4375rem; /* 311px */
   width: 100%;
   max-width: 59.875rem; /* 958px */
-  border-radius: 16px;
+  border-radius: 1rem;
   margin-bottom: 4.0625rem; /* 65px */
 }
 .card-wrapper {
@@ -251,6 +249,9 @@ p {
   gap: 3.75rem; /* 60px */
   justify-content: center;
 }
+.carousel-wrapper h2 {
+  text-align: center;
+}
 button {
   border: none;
   color: inherit;
@@ -262,7 +263,7 @@ button {
   font-size: 1rem; /* 16px */
   cursor: pointer;
   border-radius: 0.5rem; /* 8px */
-  box-shadow: 0.25rem 0.25rem 0.25rem var(--black-shadow-color);
+  box-shadow: 0.25rem 0.25rem 0.25rem var(--black-shadow-color); /* 4px 4px 4px */
 }
 .carousel-button {
   width: 3.75rem; /* 60px */
@@ -427,6 +428,7 @@ form > div:last-child {
   }
   .carousel-wrapper {
     place-items: center;
+    grid-template-columns: 1fr;
   }
   header {
     flex-direction: row;
