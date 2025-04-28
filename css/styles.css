@@ -55,7 +55,7 @@ nav {
   align-content: center;
 }
 #hero-content div:nth-child(1) {
-  font-size: 6.75rem; /* 108px */
+  font-size: 6rem; /* 96px */
   text-align: center;
   font-family: "League Gothic";
 }
